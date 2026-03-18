@@ -20,6 +20,7 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
   const [size, setSize] = useState("Все");
   const [sort, setSort] = useState<SortKey>("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const deferredSearch = useDeferredValue(search);
   const normalizedSearch = deferredSearch.trim().toLowerCase();
 
@@ -30,6 +31,14 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
   ];
   const colors = ["Все", ...new Set(products.flatMap((product) => product.colors))];
   const sizes = ["Все", ...new Set(products.flatMap((product) => product.sizes))];
+  const activeFilterCount = [
+    kind !== "Все",
+    badge !== "Все",
+    color !== "Все",
+    size !== "Все",
+    sort !== "featured",
+    inStockOnly,
+  ].filter(Boolean).length;
 
   const filteredProducts = [...products]
     .filter((product) => (kind === "Все" ? true : product.kind === kind))
@@ -102,119 +111,139 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
               </label>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#706778]">
-                  <Filter className="size-3.5" />
-                  Категория
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {kinds.map((option) => (
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen((current) => !current)}
+                  className="flex w-full items-center justify-between rounded-[1.35rem] border border-[#17111e]/10 bg-white/75 px-4 py-3.5 text-left transition hover:border-[#17111e]/20"
+                  aria-expanded={filtersOpen}
+                  aria-controls="catalog-filters-panel"
+                >
+                  <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#17111e]">
+                    <SlidersHorizontal className="size-3.5" />
+                    Фильтры
+                    {activeFilterCount > 0 ? (
+                      <span className="rounded-full bg-[#17111e] px-2 py-0.5 text-[10px] tracking-[0.12em] text-white">
+                        {activeFilterCount}
+                      </span>
+                    ) : null}
+                  </span>
+                  <ChevronDown
+                    className={`size-4 text-[#17111e]/70 transition ${filtersOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {filtersOpen ? (
+                  <div id="catalog-filters-panel" className="space-y-5 rounded-[1.5rem] border border-[#17111e]/10 bg-white/45 p-3.5 sm:p-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#706778]">
+                        <Filter className="size-3.5" />
+                        Категория
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {kinds.map((option) => (
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => setKind(option)}
+                            className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] ${
+                              kind === option
+                                ? "bg-[#17111e] text-white"
+                                : "border border-[#17111e]/10 bg-white/75 text-[#17111e]"
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="grid gap-3">
+                      <div className="relative">
+                        <select
+                          value={badge}
+                          onChange={(event) => setBadge(event.target.value)}
+                          className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                        >
+                          {badges.map((option) => (
+                            <option key={option} value={option}>
+                              {option === "Все" ? "Все техники" : option}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                      </div>
+                      <div className="relative">
+                        <select
+                          value={color}
+                          onChange={(event) => setColor(event.target.value)}
+                          className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                        >
+                          {colors.map((option) => (
+                            <option key={option} value={option}>
+                              {option === "Все" ? "Все цвета" : option}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                      </div>
+                      <div className="relative">
+                        <select
+                          value={size}
+                          onChange={(event) => setSize(event.target.value)}
+                          className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                        >
+                          {sizes.map((option) => (
+                            <option key={option} value={option}>
+                              {option === "Все" ? "Все размеры" : option}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                      </div>
+                      <div className="relative">
+                        <select
+                          value={sort}
+                          onChange={(event) => setSort(event.target.value as SortKey)}
+                          className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                        >
+                          <option value="featured">Сначала хиты</option>
+                          <option value="newest">Сначала новинки</option>
+                          <option value="price-asc">Цена: по возрастанию</option>
+                          <option value="price-desc">Цена: по убыванию</option>
+                          <option value="name">По названию</option>
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                      </div>
+                    </div>
+
+                    <label className="flex items-center gap-3 rounded-[1.25rem] border border-[#17111e]/10 bg-white/75 px-4 py-3 text-sm font-medium text-[#17111e]">
+                      <input
+                        type="checkbox"
+                        checked={inStockOnly}
+                        onChange={(event) => setInStockOnly(event.target.checked)}
+                        className="h-4 w-4 accent-[#17111e]"
+                      />
+                      Только в наличии
+                    </label>
+
                     <button
-                      key={option}
                       type="button"
-                      onClick={() => setKind(option)}
-                      className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] ${
-                        kind === option
-                          ? "bg-[#17111e] text-white"
-                          : "border border-[#17111e]/10 bg-white/75 text-[#17111e]"
-                      }`}
+                      onClick={() => {
+                        setSearch("");
+                        setKind("Все");
+                        setBadge("Все");
+                        setColor("Все");
+                        setSize("Все");
+                        setSort("featured");
+                        setInStockOnly(false);
+                      }}
+                      className="w-full rounded-full border border-[#17111e]/10 px-4 py-3 text-sm font-semibold text-[#17111e] transition hover:border-[#e7402a] hover:text-[#e7402a]"
                     >
-                      {option}
+                      Сбросить фильтры
                     </button>
-                  ))}
-                </div>
+                  </div>
+                ) : null}
               </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#706778]">
-                  <SlidersHorizontal className="size-3.5" />
-                  Фильтры
-                </div>
-
-                <div className="grid gap-3">
-                  <div className="relative">
-                    <select
-                      value={badge}
-                      onChange={(event) => setBadge(event.target.value)}
-                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
-                    >
-                      {badges.map((option) => (
-                        <option key={option} value={option}>
-                          {option === "Все" ? "Все техники" : option}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
-                  </div>
-                  <div className="relative">
-                    <select
-                      value={color}
-                      onChange={(event) => setColor(event.target.value)}
-                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
-                    >
-                      {colors.map((option) => (
-                        <option key={option} value={option}>
-                          {option === "Все" ? "Все цвета" : option}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
-                  </div>
-                  <div className="relative">
-                    <select
-                      value={size}
-                      onChange={(event) => setSize(event.target.value)}
-                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
-                    >
-                      {sizes.map((option) => (
-                        <option key={option} value={option}>
-                          {option === "Все" ? "Все размеры" : option}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
-                  </div>
-                  <div className="relative">
-                    <select
-                      value={sort}
-                      onChange={(event) => setSort(event.target.value as SortKey)}
-                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
-                    >
-                      <option value="featured">Сначала хиты</option>
-                      <option value="newest">Сначала новинки</option>
-                      <option value="price-asc">Цена: по возрастанию</option>
-                      <option value="price-desc">Цена: по убыванию</option>
-                      <option value="name">По названию</option>
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
-                  </div>
-                </div>
-              </div>
-
-              <label className="flex items-center gap-3 rounded-[1.25rem] border border-[#17111e]/10 bg-white/75 px-4 py-3 text-sm font-medium text-[#17111e]">
-                <input
-                  type="checkbox"
-                  checked={inStockOnly}
-                  onChange={(event) => setInStockOnly(event.target.checked)}
-                  className="h-4 w-4 accent-[#17111e]"
-                />
-                Только в наличии
-              </label>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setSearch("");
-                  setKind("Все");
-                  setBadge("Все");
-                  setColor("Все");
-                  setSize("Все");
-                  setSort("featured");
-                  setInStockOnly(false);
-                }}
-                className="w-full rounded-full border border-[#17111e]/10 px-4 py-3 text-sm font-semibold text-[#17111e] transition hover:border-[#e7402a] hover:text-[#e7402a]"
-              >
-                Сбросить фильтры
-              </button>
             </div>
           </aside>
 
