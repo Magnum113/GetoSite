@@ -131,12 +131,15 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
                 </p>
               </div>
 
-              <div className="rounded-[1.8rem] border border-[#17111e]/10 bg-white/75 p-5">
-                {selectedVariant.oldPrice ? (
-                  <PriceText value={selectedVariant.oldPrice} className="text-sm text-[#8b8190] line-through" />
-                ) : null}
-                <div className="mt-2">
-                  <PriceText value={selectedVariant.price} className="text-5xl text-[#17111e]" />
+              <div className="flex">
+                <div className="relative inline-flex max-w-full flex-col rounded-[1.6rem] border border-[#17111e]/10 bg-white/78 px-5 py-4 shadow-[0_16px_36px_rgba(20,14,26,0.05)] sm:px-6 sm:py-5">
+                  <div className="absolute inset-y-4 left-0.5 w-1 rounded-full bg-gradient-to-b from-[#e7402a] to-[#f4b04d]" />
+                  <div className="pl-3 sm:pl-4">
+                    {selectedVariant.oldPrice ? (
+                      <PriceText value={selectedVariant.oldPrice} className="text-sm text-[#8b8190] line-through" />
+                    ) : null}
+                    <PriceText value={selectedVariant.price} className="mt-1 block text-[3.1rem] leading-none text-[#17111e] sm:text-5xl" />
+                  </div>
                 </div>
               </div>
 
