@@ -56,12 +56,12 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
     <section className="px-4 pb-8 pt-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.03fr)_minmax(440px,0.97fr)]">
-          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-7 sm:px-10 sm:py-9 lg:min-h-[620px] lg:px-12 lg:py-10">
+          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-7 sm:px-10 sm:py-9 lg:min-h-[760px] lg:px-12 lg:py-10">
             <div className="pulse-aura absolute -left-12 top-10 h-56 w-56 rounded-full bg-[#e7402a]/18 blur-3xl" />
             <div className="pulse-aura absolute bottom-10 right-0 h-60 w-60 rounded-full bg-[#29d6cf]/16 blur-3xl" />
             <div className="absolute inset-y-8 right-8 hidden w-px bg-gradient-to-b from-transparent via-[#17111e]/10 to-transparent lg:block" />
 
-            <div className="relative flex h-full flex-col justify-start gap-7 lg:pt-6">
+            <div className="relative flex h-full flex-col justify-between gap-7 lg:pt-6">
               <div className="max-w-[40rem] space-y-6">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-[#17111e] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
@@ -87,6 +87,52 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     <ArrowDownRight className="size-4" />
                   </Link>
                 </div>
+              </div>
+
+              <div className="hidden lg:grid lg:grid-cols-3 lg:gap-3">
+                {products.map((product, index) => {
+                  const isActive = index === activeIndex;
+
+                  return (
+                    <button
+                      key={`desktop-${product.id}`}
+                      type="button"
+                      onClick={() => setActiveIndex(index)}
+                      className={`group min-w-0 text-left transition duration-500 ${
+                        isActive ? "translate-y-[-2px]" : ""
+                      }`}
+                    >
+                      <div
+                        className={`relative overflow-hidden rounded-[1.45rem] border backdrop-blur-sm transition duration-500 ${
+                          isActive
+                            ? "border-[#17111e]/18 bg-white/48 shadow-[0_18px_44px_rgba(0,0,0,0.08)]"
+                            : "border-[#17111e]/10 bg-white/34 hover:border-[#17111e]/18 hover:bg-white/44"
+                        }`}
+                      >
+                        <div className="relative aspect-[0.94]">
+                          <Image
+                            src={product.gallery[0]}
+                            alt={product.title}
+                            fill
+                            sizes="220px"
+                            className={`object-cover object-center transition duration-700 ${
+                              isActive ? "scale-[1.02]" : "scale-100 group-hover:scale-[1.04]"
+                            }`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#120d18]/88 via-[#120d18]/20 to-transparent" />
+                          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3">
+                            <PriceText value={product.priceFrom} className="text-[1.9rem] text-[#f4b04d]" />
+                            <ChevronRight
+                              className={`size-3.5 transition ${
+                                isActive ? "translate-x-0 text-white" : "translate-x-0 text-white/48"
+                              }`}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -176,7 +222,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               })}
             </div>
 
-            <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-3">
+            <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 lg:hidden xl:grid-cols-3">
               {products.map((product, index) => {
                 const isActive = index === activeIndex;
 
