@@ -73,8 +73,10 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                   <p className="text-xs uppercase tracking-[0.36em] text-[#6e6476]">
                     японский вайб и яркий силуэт
                   </p>
-                  <h1 className="display-shadow max-w-[8.5ch] font-display text-[3.8rem] uppercase leading-[0.9] text-[#17111e] sm:text-[4.8rem] lg:text-[5.2rem] xl:text-[5.5rem]">
-                    Шмот с собственной аркой.
+                  <h1 className="display-shadow max-w-[11ch] font-display text-[3rem] leading-[0.92] tracking-[-0.03em] text-[#17111e] sm:text-[3.8rem] lg:text-[4rem] xl:text-[4.35rem]">
+                    <span className="block">Футболки и худи</span>
+                    <span className="block">с аниме принтами</span>
+                    <span className="block">и вышивкой</span>
                   </h1>
                 </div>
 
@@ -254,7 +256,15 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#120d18] via-[#120d18]/28 to-transparent" />
                         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2.5 sm:gap-3 sm:p-4">
-                          <PriceText value={product.priceFrom} className="text-2xl text-[#f4b04d] sm:text-3xl" />
+                          <div>
+                            {product.oldPriceFrom ? (
+                              <PriceText
+                                value={product.oldPriceFrom}
+                                className="mb-1 text-[11px] text-white/38 line-through sm:text-xs"
+                              />
+                            ) : null}
+                            <PriceText value={product.priceFrom} className="text-2xl text-[#f4b04d] sm:text-3xl" />
+                          </div>
                           <ChevronRight
                             className={`size-3.5 transition sm:size-4 ${
                               isActive ? "translate-x-0 text-white" : "translate-x-0 text-white/48"
