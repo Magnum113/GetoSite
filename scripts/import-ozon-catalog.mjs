@@ -210,6 +210,21 @@ function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function buildStandalonePattern(values) {
+  const normalizedValues = uniqueStrings(values)
+    .map((value) => value.toLowerCase())
+    .sort((left, right) => right.length - left.length);
+
+  if (normalizedValues.length === 0) {
+    return null;
+  }
+
+  return new RegExp(
+    `(^|[\\s,()/-])(?:${normalizedValues.map((value) => escapeRegExp(value)).join("|")})(?=$|[\\s,()/-])`,
+    "giu"
+  );
+}
+
 function detectKind(value) {
   const lower = value.toLowerCase();
 
@@ -330,8 +345,11 @@ function normalizeTitle(name, colors) {
   result = result.replace(/\s+\d{2,3}$/i, "");
 
   for (const color of [...colors].sort((left, right) => right.length - left.length)) {
-    const pattern = new RegExp(`(?:\\s|,)+${escapeRegExp(color)}$`, "i");
-    result = result.replace(pattern, "");
+    const pattern = buildColorPattern(color);
+
+    if (pattern) {
+      result = result.replace(pattern, "$1");
+    }
   }
 
   return cleanSpaces(result);
@@ -341,26 +359,33 @@ function buildColorPattern(color) {
   const lower = color.toLowerCase();
 
   if (lower.includes("бел")) {
-    return /\b(белый|белая|белое)\b/gi;
+    return buildStandalonePattern(["белый", "белая", "белое"]);
   }
 
   if (lower.includes("чер")) {
-    return /\b(черный|черная|черное)\b/gi;
+    return buildStandalonePattern(["черный", "черная", "черное"]);
   }
 
   if (lower.includes("сер")) {
-    return /\b(серый|серая|серое)\b/gi;
+    return buildStandalonePattern(["серый", "серая", "серое"]);
   }
 
   if (lower.includes("беж")) {
-    return /\b(бежевый|бежевая|бежевое)\b/gi;
+    return buildStandalonePattern(["бежевый", "бежевая", "бежевое"]);
   }
 
   if (lower.includes("син")) {
-    return /\b(синий|синяя|синее|темно-синий|темно синяя|темно синий)\b/gi;
+    return buildStandalonePattern([
+      "синий",
+      "синяя",
+      "синее",
+      "темно-синий",
+      "темно синяя",
+      "темно синий",
+    ]);
   }
 
-  return new RegExp(escapeRegExp(color), "gi");
+  return buildStandalonePattern([color]);
 }
 
 function canonicalGroupTitle(name, color) {
@@ -370,7 +395,11 @@ function canonicalGroupTitle(name, color) {
   result = result.replace(/\b\d{2,3}\b/gi, " ");
 
   if (color) {
-    result = result.replace(buildColorPattern(color), " ");
+    const colorPattern = buildColorPattern(color);
+
+    if (colorPattern) {
+      result = result.replace(colorPattern, "$1");
+    }
   }
 
   return cleanSpaces(result)
