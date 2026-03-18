@@ -118,9 +118,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     }`}
                     aria-hidden={!isActive}
                   >
-                    <div className="absolute inset-x-6 top-24 bottom-[186px] rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm" />
-
-                    <div className="absolute inset-x-10 top-[120px] bottom-[202px]">
+                    <div className="absolute inset-x-6 top-24 bottom-[186px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm">
                       <div className="relative h-full w-full">
                         <Image
                           src={product.gallery[0]}
@@ -128,19 +126,19 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                           fill
                           priority={index === 0}
                           sizes="(max-width: 1024px) 100vw, 46vw"
-                          className="object-contain object-center drop-shadow-[0_30px_65px_rgba(0,0,0,0.35)]"
+                          className="object-cover object-center drop-shadow-[0_30px_65px_rgba(0,0,0,0.35)]"
                         />
                       </div>
                     </div>
 
-                    <div className="absolute right-7 top-24 hidden w-32 rotate-[7deg] overflow-hidden rounded-[1.8rem] border border-white/12 bg-white/8 p-2 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-sm lg:block">
-                      <div className="relative aspect-[0.92]">
+                    <div className="absolute right-7 top-24 hidden w-32 rotate-[7deg] overflow-hidden rounded-[1.8rem] border border-white/12 bg-white/8 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-sm lg:block">
+                      <div className="relative aspect-[0.92] w-full">
                         <Image
                           src={product.gallery[1] ?? product.gallery[0]}
                           alt={product.title}
                           fill
                           sizes="128px"
-                          className="object-contain object-center"
+                          className="object-cover object-center"
                         />
                       </div>
                     </div>
