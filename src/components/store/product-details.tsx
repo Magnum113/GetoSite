@@ -123,10 +123,6 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
           <div className="surface-panel rounded-[2.4rem] p-6 sm:p-8">
             <div className="space-y-6">
               <div className="space-y-3">
-                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">
-                  {product.kind}
-                  {product.badge ? ` • ${product.badge}` : ""}
-                </p>
                 <h1 className="font-display text-4xl leading-tight text-[#17111e] sm:text-5xl">
                   {product.title}
                 </h1>
@@ -139,16 +135,8 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
                 {selectedVariant.oldPrice ? (
                   <PriceText value={selectedVariant.oldPrice} className="text-sm text-[#8b8190] line-through" />
                 ) : null}
-                <div className="mt-2 flex flex-wrap items-end gap-4">
+                <div className="mt-2">
                   <PriceText value={selectedVariant.price} className="text-5xl text-[#17111e]" />
-                  <div className="space-y-1 pb-1">
-                    <p className="text-xs uppercase tracking-[0.24em] text-[#706778]">
-                      В наличии
-                    </p>
-                    <p className="text-sm font-medium text-[#17111e]">
-                      {selectedVariant.stock} шт.
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -243,16 +231,16 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
                 Добавить в корзину
               </button>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <article className="rounded-[1.6rem] border border-[#17111e]/10 bg-white/75 p-4">
+              <div className="space-y-3">
+                <article className="rounded-[1.45rem] border border-[#17111e]/10 bg-white/75 px-4 py-3.5 sm:px-5 sm:py-4">
                   <p className="text-xs uppercase tracking-[0.24em] text-[#706778]">Состав</p>
-                  <p className="mt-3 text-sm leading-6 text-[#17111e]">
+                  <p className="mt-2 text-sm leading-6 text-[#17111e]">
                     {selectedVariant.composition ?? product.composition ?? "Уточняется"}
                   </p>
                 </article>
-                <article className="rounded-[1.6rem] border border-[#17111e]/10 bg-white/75 p-4">
+                <article className="rounded-[1.6rem] border border-[#17111e]/10 bg-white/75 p-4 sm:p-5">
                   <p className="text-xs uppercase tracking-[0.24em] text-[#706778]">Уход</p>
-                  <p className="mt-3 text-sm leading-6 text-[#17111e]">
+                  <p className="mt-2.5 text-sm leading-7 text-[#17111e]">
                     {selectedVariant.care ?? product.care ?? "Рекомендации появятся позже"}
                   </p>
                 </article>
