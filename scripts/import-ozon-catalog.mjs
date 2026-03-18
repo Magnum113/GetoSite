@@ -338,21 +338,16 @@ function selectMostCommon(values) {
   return [...counts.entries()].sort((left, right) => right[1] - left[1])[0]?.[0] ?? null;
 }
 
-function normalizeTitle(name, colors) {
+function normalizeSizedTitle(name) {
   let result = cleanSpaces(name);
 
-  result = result.replace(/\s+(XS|S|M|L|XL|XXL|2XL|3XL|4XL|5XL)$/i, "");
-  result = result.replace(/\s+\d{2,3}$/i, "");
+  result = result.replace(/\b(XS|S|M|L|XL|XXL|2XL|3XL|4XL|5XL)\b/gi, " ");
+  result = result.replace(/\b\d{2,3}\b/gi, " ");
 
-  for (const color of [...colors].sort((left, right) => right.length - left.length)) {
-    const pattern = buildColorPattern(color);
-
-    if (pattern) {
-      result = result.replace(pattern, "$1");
-    }
-  }
-
-  return cleanSpaces(result);
+  return cleanSpaces(result)
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+,/g, ",")
+    .replace(/\s+-\s+/g, " ");
 }
 
 function buildColorPattern(color) {
@@ -465,8 +460,8 @@ function buildProduct(variants) {
   const sizes = uniqueStrings(variants.map((variant) => variant.size).filter(Boolean)).sort(
     (left, right) => sizeRank(left) - sizeRank(right)
   );
-  const normalizedTitles = variants.map((variant) => normalizeTitle(variant.groupTitle, colors));
-  const title = selectMostCommon(normalizedTitles) ?? normalizedTitles[0] ?? variants[0].name;
+  const displayTitles = variants.map((variant) => normalizeSizedTitle(variant.name));
+  const title = selectMostCommon(displayTitles) ?? displayTitles[0] ?? variants[0].name;
   const prices = variants.map((variant) => variant.price).filter((value) => value > 0);
   const oldPrices = variants.map((variant) => variant.oldPrice).filter((value) => value && value > 0);
   const gallery = uniqueStrings(variants.flatMap((variant) => variant.images)).slice(0, 10);
@@ -616,9 +611,9 @@ async function fetchCatalog() {
 
   for (const record of records) {
     const groupKey = [
-      detectKind(record.variant.groupTitle),
-      record.variant.badge ?? "none",
+      record.variant.sourceModelId || slugify(record.variant.groupTitle),
       slugify(record.variant.groupTitle),
+      slugify(record.variant.color ?? record.variant.colorLabel ?? "no-color"),
     ].join("::");
     const variants = grouped.get(groupKey) ?? [];
     variants.push(record.variant);

@@ -34,8 +34,7 @@ export function CartDrawer() {
       >
         <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
           <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/45">Корзина</p>
-            <h2 className="mt-2 font-display text-2xl">Твой дроп в сборе</h2>
+            <h2 className="font-display text-2xl">Корзина</h2>
           </div>
           <button
             type="button"

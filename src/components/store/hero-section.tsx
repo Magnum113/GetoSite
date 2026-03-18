@@ -24,7 +24,7 @@ const HERO_TICKER_ITEMS = [
 ];
 const HERO_POPULAR_PREVIEW_ITEMS = [
   {
-    slug: "futbolka-naruto-s-vyshivkoy-itachi-3097415572",
+    slug: "futbolka-naruto-s-vyshivkoy-itachi-chernaya-3097415624",
     color: "черный",
   },
   {
@@ -32,7 +32,7 @@ const HERO_POPULAR_PREVIEW_ITEMS = [
     color: "серый",
   },
   {
-    slug: "futbolka-naruto-s-printom-akatsuki-3097415570",
+    slug: "futbolka-naruto-s-printom-akatsuki-chernaya-3097415665",
     color: "черный",
   },
 ] as const;
