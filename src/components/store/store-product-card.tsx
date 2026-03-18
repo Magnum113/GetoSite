@@ -35,7 +35,7 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
               ) : null}
             </div>
             {product.discountPercent ? (
-              <span className="rounded-full border border-white/30 bg-white/75 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#17111e] sm:px-3 sm:text-[10px] sm:tracking-[0.24em]">
+              <span className="rounded-full border border-[#ffb49f]/45 bg-gradient-to-r from-[#ff7a5d] to-[#e7402a] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(231,64,42,0.3)] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em]">
                 -{product.discountPercent}%
               </span>
             ) : null}
@@ -51,10 +51,7 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
 
         <div className="relative mt-3.5 sm:mt-5">
           <div className="flex items-start justify-between gap-2 sm:gap-4">
-            <div className="space-y-2">
-              <p className="text-[10px] uppercase tracking-[0.22em] text-[#6d6472] sm:text-xs sm:tracking-[0.28em]">
-                {product.variantCount} вариантов
-              </p>
+            <div>
               <h3 className="line-clamp-3 font-display text-[1.05rem] leading-[1.02] text-[#17111e] sm:text-2xl sm:leading-tight">
                 {product.title}
               </h3>
@@ -66,10 +63,6 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
               <ArrowUpRight className="size-3.5 sm:size-4" />
             </Link>
           </div>
-
-          <p className="mt-2 hidden line-clamp-2 text-sm leading-6 text-[#5b5262] sm:block">
-            {product.subtitle || product.description}
-          </p>
 
           <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
             {product.colors.slice(0, 3).map((color) => (
