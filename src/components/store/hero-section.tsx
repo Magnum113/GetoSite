@@ -89,10 +89,6 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
           </div>
 
           <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-4 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5">
-            <div className="absolute right-6 top-5 z-20 text-[11px] uppercase tracking-[0.26em] text-white/45">
-              {String(activeIndex + 1).padStart(2, "0")} / {String(products.length).padStart(2, "0")}
-            </div>
-
             <div className="absolute left-6 right-6 top-8 z-20 h-1 overflow-hidden rounded-full bg-white/10">
               <div
                 key={activeProduct.id}
