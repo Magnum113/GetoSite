@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7efe3;
+  --foreground: #18111f;
+  --paper: #fff5eb;
+  --paper-strong: rgba(255, 247, 238, 0.82);
+  --ink: #17111e;
+  --muted: #605667;
+  --edge: rgba(23, 17, 30, 0.1);
+  --accent-red: #e7402a;
+  --accent-cyan: #29d6cf;
+  --accent-gold: #f4b04d;
+  --accent-plum: #513a68;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-paper: var(--paper);
+  --color-paper-strong: var(--paper-strong);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-edge: var(--edge);
+  --color-accent-red: var(--accent-red);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-gold: var(--accent-gold);
+  --color-accent-plum: var(--accent-plum);
+  --font-sans: var(--font-body-face);
+  --font-display: var(--font-display-face);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body-face), sans-serif;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(231, 64, 42, 0.18), transparent 24%),
+    radial-gradient(circle at 85% 15%, rgba(41, 214, 207, 0.22), transparent 18%),
+    radial-gradient(circle at 70% 75%, rgba(244, 176, 77, 0.16), transparent 22%),
+    linear-gradient(145deg, #f7efe3 0%, #f3e8db 45%, #fbf4ee 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(23, 17, 30, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 17, 30, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+}
+
+main {
+  position: relative;
+}
+
+a,
+button {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(231, 64, 42, 0.24);
+  color: var(--foreground);
+}
+
+.display-shadow {
+  text-shadow: 0 12px 35px rgba(23, 17, 30, 0.16);
+}
+
+.surface-panel {
+  border: 1px solid var(--edge);
+  background: rgba(255, 248, 241, 0.72);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 80px rgba(23, 17, 30, 0.1);
+}
+
+.hero-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(244, 176, 77, 0.3), transparent 32%),
+    radial-gradient(circle at 70% 25%, rgba(41, 214, 207, 0.25), transparent 24%),
+    linear-gradient(135deg, rgba(231, 64, 42, 0.18), transparent 45%);
+  pointer-events: none;
+}
+
+.ticker-track {
+  animation: marquee 28s linear infinite;
+}
+
+.float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+.float-slower {
+  animation: float 11s ease-in-out infinite;
+}
+
+.pulse-aura {
+  animation: pulse-aura 6s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes pulse-aura {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
