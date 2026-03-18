@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { ArrowDownRight, ShoppingBag, Sparkles } from "lucide-react";
-import { formatCurrency, formatProductCount } from "@/lib/catalog";
-import type { CatalogMeta, CatalogProduct } from "@/types/store";
+import { formatCurrency } from "@/lib/catalog";
+import type { CatalogProduct } from "@/types/store";
 
 type HeroSectionProps = {
-  meta: CatalogMeta;
   featuredProducts: CatalogProduct[];
 };
 
-export function HeroSection({ meta, featuredProducts }: HeroSectionProps) {
+export function HeroSection({ featuredProducts }: HeroSectionProps) {
   const tickerItems = featuredProducts.flatMap((product) => [
     product.title,
     product.kind,
@@ -59,25 +58,6 @@ export function HeroSection({ meta, featuredProducts }: HeroSectionProps) {
                   Оформить дроп
                 </Link>
               </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              <article className="rounded-[1.8rem] border border-[#17111e]/10 bg-white/72 p-5">
-                <p className="text-xs uppercase tracking-[0.28em] text-[#706778]">Дизайны</p>
-                <p className="mt-3 font-display text-4xl text-[#17111e]">
-                  {formatProductCount(meta.productCount)}
-                </p>
-              </article>
-              <article className="rounded-[1.8rem] border border-[#17111e]/10 bg-white/72 p-5">
-                <p className="text-xs uppercase tracking-[0.28em] text-[#706778]">SKU из Ozon</p>
-                <p className="mt-3 font-display text-4xl text-[#17111e]">
-                  {formatProductCount(meta.skuCount)}
-                </p>
-              </article>
-              <article className="rounded-[1.8rem] border border-[#17111e]/10 bg-[#17111e] p-5 text-white">
-                <p className="text-xs uppercase tracking-[0.28em] text-white/45">Чек без оплаты</p>
-                <p className="mt-3 font-display text-3xl">готов</p>
-              </article>
             </div>
           </div>
         </div>

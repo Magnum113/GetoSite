@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <SiteHeader />
       <main>
-        <HeroSection meta={catalog.meta} featuredProducts={getFeaturedProducts(3)} />
+        <HeroSection featuredProducts={getFeaturedProducts(3)} />
         <StorefrontShell products={catalog.products} meta={catalog.meta} />
       </main>
       <SiteFooter />
