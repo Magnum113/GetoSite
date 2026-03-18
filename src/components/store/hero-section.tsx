@@ -22,6 +22,32 @@ const HERO_TICKER_ITEMS = [
   "Мадара Учиха",
   "Gravity Defied",
 ];
+const HERO_POPULAR_PREVIEW_ITEMS = [
+  {
+    slug: "futbolka-naruto-s-vyshivkoy-itachi-3097415572",
+    color: "черный",
+  },
+  {
+    slug: "varenaya-futbolka-s-printom-satoru-godzho-3097415655",
+    color: "серый",
+  },
+  {
+    slug: "futbolka-naruto-s-printom-akatsuki-3097415570",
+    color: "черный",
+  },
+] as const;
+
+function resolveHeroMedia(product: CatalogProduct, preferredColor?: string | null) {
+  const preferredVariant =
+    (preferredColor
+      ? product.variants.find((variant) => variant.color?.toLowerCase() === preferredColor.toLowerCase())
+      : null) ?? product.variants[0];
+
+  return {
+    primaryImage: preferredVariant?.primaryImage || product.gallery[0],
+    secondaryImage: preferredVariant?.images[1] ?? preferredVariant?.images[0] ?? product.gallery[1] ?? product.gallery[0],
+  };
+}
 
 export function HeroSection({ featuredProducts }: HeroSectionProps) {
   const products = featuredProducts.slice(0, 6);
@@ -59,8 +85,29 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
     return null;
   }
 
-  const activeProduct = products[activeIndex % products.length];
-  const desktopPreviewProducts = products.slice(0, 3);
+  const heroProducts = products.map((product) => {
+    const preferredConfig = HERO_POPULAR_PREVIEW_ITEMS.find((item) => item.slug === product.slug);
+
+    return {
+      product,
+      ...resolveHeroMedia(product, preferredConfig?.color),
+    };
+  });
+  const activeHeroProduct = heroProducts[activeIndex % heroProducts.length];
+  const activeProduct = activeHeroProduct.product;
+  const desktopPreviewProducts = HERO_POPULAR_PREVIEW_ITEMS.map((item) => {
+    const productIndex = heroProducts.findIndex((heroProduct) => heroProduct.product.slug === item.slug);
+
+    if (productIndex < 0) {
+      return null;
+    }
+
+    return {
+      ...heroProducts[productIndex],
+      productIndex,
+    };
+  })
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
   const tickerItems = [...HERO_TICKER_ITEMS, ...HERO_TICKER_ITEMS];
 
   return (
@@ -103,14 +150,14 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               </div>
 
               <div className="hidden lg:grid lg:grid-cols-3 lg:gap-3">
-                {desktopPreviewProducts.map((product, index) => {
-                  const isActive = product.id === activeProduct.id;
+                {desktopPreviewProducts.map((heroProduct) => {
+                  const isActive = heroProduct.product.id === activeProduct.id;
 
                   return (
                     <button
-                      key={`desktop-${product.id}`}
+                      key={`desktop-${heroProduct.product.id}`}
                       type="button"
-                      onClick={() => setActiveIndex(index)}
+                      onClick={() => setActiveIndex(heroProduct.productIndex)}
                       className={`group min-w-0 text-left transition duration-500 ${
                         isActive ? "translate-y-[-2px]" : ""
                       }`}
@@ -124,8 +171,8 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                       >
                         <div className="relative aspect-[0.94]">
                           <Image
-                            src={product.gallery[0]}
-                            alt={product.title}
+                            src={heroProduct.primaryImage}
+                            alt={heroProduct.product.title}
                             fill
                             sizes="220px"
                             className={`object-cover object-center transition duration-700 ${
@@ -134,7 +181,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#120d18]/88 via-[#120d18]/20 to-transparent" />
                           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3">
-                            <PriceText value={product.priceFrom} className="text-[1.9rem] text-[#f4b04d]" />
+                            <PriceText value={heroProduct.product.priceFrom} className="text-[1.9rem] text-[#f4b04d]" />
                             <ChevronRight
                               className={`size-3.5 transition ${
                                 isActive ? "translate-x-0 text-white" : "translate-x-0 text-white/48"
@@ -192,7 +239,8 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               <div className="absolute right-0 top-10 h-48 w-48 rounded-full bg-[#29d6cf]/20 blur-3xl" />
               <div className="absolute bottom-0 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-[#f4b04d]/16 blur-3xl" />
 
-              {products.map((product, index) => {
+              {heroProducts.map((heroProduct, index) => {
+                const product = heroProduct.product;
                 const isActive = index === activeIndex;
 
                 return (
@@ -208,7 +256,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     <div className="absolute inset-x-4 top-12 bottom-[156px] overflow-hidden rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm sm:inset-x-6 sm:top-24 sm:bottom-[186px] sm:rounded-[2rem]">
                       <div className="relative h-full w-full">
                         <Image
-                          src={product.gallery[0]}
+                          src={heroProduct.primaryImage}
                           alt={product.title}
                           fill
                           priority={index === 0}
@@ -221,7 +269,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     <div className="absolute right-7 top-24 hidden w-32 rotate-[7deg] overflow-hidden rounded-[1.8rem] border border-white/12 bg-white/8 shadow-[0_18px_45px_rgba(0,0,0,0.2)] backdrop-blur-sm lg:block">
                       <div className="relative aspect-[0.92] w-full">
                         <Image
-                          src={product.gallery[1] ?? product.gallery[0]}
+                          src={heroProduct.secondaryImage}
                           alt={product.title}
                           fill
                           sizes="128px"
@@ -265,7 +313,8 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
             </div>
 
             <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 lg:hidden xl:grid-cols-3">
-              {products.map((product, index) => {
+              {heroProducts.map((heroProduct, index) => {
+                const product = heroProduct.product;
                 const isActive = index === activeIndex;
 
                 return (
@@ -286,7 +335,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     >
                       <div className="relative aspect-[0.94] sm:aspect-[1.04]">
                         <Image
-                          src={product.gallery[0]}
+                          src={heroProduct.primaryImage}
                           alt={product.title}
                           fill
                           sizes="(max-width: 768px) 50vw, 220px"
