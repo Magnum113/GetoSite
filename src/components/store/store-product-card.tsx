@@ -126,9 +126,9 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
             ) : (
               <Link
                 href={`/products/${product.slug}`}
-                className="rounded-full bg-[#e7402a] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#ff684f]"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#e7402a] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#ff684f]"
               >
-                Выбрать вариант
+                Выбрать
               </Link>
             )}
           </div>
