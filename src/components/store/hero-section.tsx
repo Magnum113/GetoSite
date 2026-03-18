@@ -13,6 +13,8 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
     product.kind,
     product.badge ?? "drop",
   ]);
+  const primaryProduct = featuredProducts[0];
+  const secondaryProducts = featuredProducts.slice(1, 3);
 
   return (
     <section className="px-4 pb-8 pt-8 sm:px-6 lg:px-10">
@@ -68,40 +70,63 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               <article className="hero-glow relative overflow-hidden rounded-[2rem] border border-[#17111e]/10 bg-[#17111e] p-4 text-white">
                 <div className="float-slower absolute right-4 top-4 h-20 w-20 rounded-full bg-[#29d6cf]/30 blur-2xl" />
                 <div className="float-slow absolute -bottom-2 left-4 h-24 w-24 rounded-full bg-[#e7402a]/30 blur-2xl" />
-                <div className="relative space-y-4">
-                  <p className="text-xs uppercase tracking-[0.32em] text-white/45">Featured motion</p>
-                  <div className="grid gap-3">
-                    {featuredProducts.slice(0, 2).map((product, index) => {
-                      const video = product.videos[0];
-                      const image = product.gallery[0];
+                <div className="relative flex h-full flex-col gap-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.32em] text-white/45">
+                        Featured drop
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-white/70">
+                        Главный акцент с живым фото товара из каталога.
+                      </p>
+                    </div>
+                  </div>
 
-                      return (
+                  <div className="relative min-h-[420px] flex-1 overflow-hidden rounded-[1.8rem] border border-white/10 bg-white/8">
+                    {primaryProduct?.videos[0] ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        poster={primaryProduct.gallery[0]}
+                        className="h-full w-full object-cover"
+                      >
+                        <source src={primaryProduct.videos[0]} />
+                      </video>
+                    ) : (
+                      <div
+                        className="h-full w-full bg-cover bg-center"
+                        style={{ backgroundImage: `url(${primaryProduct?.gallery[0] ?? ""})` }}
+                      />
+                    )}
+
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17111e] via-[#17111e]/78 to-transparent p-5">
+                      <p className="text-[11px] uppercase tracking-[0.26em] text-white/45">
+                        {primaryProduct?.kind}
+                        {primaryProduct?.badge ? ` • ${primaryProduct.badge}` : ""}
+                      </p>
+                      <h2 className="mt-3 max-w-xs font-display text-3xl leading-tight text-white">
+                        {primaryProduct?.title}
+                      </h2>
+                      <p className="mt-3 font-display text-3xl text-[#f4b04d]">
+                        {primaryProduct ? formatCurrency(primaryProduct.priceFrom) : ""}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {secondaryProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/6"
+                      >
                         <div
-                          key={product.id}
-                          className={`overflow-hidden rounded-[1.6rem] border border-white/10 ${
-                            index === 0 ? "aspect-[0.92]" : "aspect-[1.05]"
-                          }`}
-                        >
-                          {video ? (
-                            <video
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              poster={image}
-                              className="h-full w-full object-cover"
-                            >
-                              <source src={video} />
-                            </video>
-                          ) : (
-                            <div
-                              className="h-full w-full bg-cover bg-center"
-                              style={{ backgroundImage: `url(${image})` }}
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
+                          className="aspect-[1.1] bg-cover bg-center"
+                          style={{ backgroundImage: `url(${product.gallery[0]})` }}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </article>
@@ -114,30 +139,41 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                       index === 0 ? "bg-[#fff4ea]" : "bg-white/75"
                     } rounded-[1.8rem] p-4`}
                   >
-                    <p className="text-[11px] uppercase tracking-[0.26em] text-[#7a7181]">
-                      {product.kind}
-                      {product.badge ? ` • ${product.badge}` : ""}
-                    </p>
-                    <h2 className="mt-3 font-display text-2xl leading-tight text-[#17111e]">
-                      {product.title}
-                    </h2>
-                    <div className="mt-4 flex items-end justify-between gap-3">
-                      <div>
-                        {product.oldPriceFrom ? (
-                          <p className="text-xs text-[#8b8190] line-through">
-                            {formatCurrency(product.oldPriceFrom)}
-                          </p>
-                        ) : null}
-                        <p className="font-display text-3xl text-[#17111e]">
-                          {formatCurrency(product.priceFrom)}
-                        </p>
+                    <div className="grid min-h-[172px] gap-4 sm:grid-cols-[116px_1fr] sm:items-center">
+                      <div className="overflow-hidden rounded-[1.45rem] border border-[#17111e]/8 bg-[#efe5d8]">
+                        <div
+                          className="aspect-square bg-cover bg-center"
+                          style={{ backgroundImage: `url(${product.gallery[0]})` }}
+                        />
                       </div>
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="rounded-full bg-[#17111e] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#e7402a]"
-                      >
-                        Открыть
-                      </Link>
+
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.26em] text-[#7a7181]">
+                          {product.kind}
+                          {product.badge ? ` • ${product.badge}` : ""}
+                        </p>
+                        <h2 className="mt-3 font-display text-2xl leading-tight text-[#17111e]">
+                          {product.title}
+                        </h2>
+                        <div className="mt-4 flex items-end justify-between gap-3">
+                          <div>
+                            {product.oldPriceFrom ? (
+                              <p className="text-xs text-[#8b8190] line-through">
+                                {formatCurrency(product.oldPriceFrom)}
+                              </p>
+                            ) : null}
+                            <p className="font-display text-3xl text-[#17111e]">
+                              {formatCurrency(product.priceFrom)}
+                            </p>
+                          </div>
+                          <Link
+                            href={`/products/${product.slug}`}
+                            className="rounded-full bg-[#17111e] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#e7402a]"
+                          >
+                            Открыть
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </article>
                 ))}
