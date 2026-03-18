@@ -122,13 +122,10 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
 
           <div className="surface-panel rounded-[2.4rem] p-6 sm:p-8">
             <div className="space-y-6">
-              <div className="space-y-3">
+              <div>
                 <h1 className="font-display text-4xl leading-tight text-[#17111e] sm:text-5xl">
                   {product.title}
                 </h1>
-                <p className="max-w-2xl text-sm leading-7 text-[#5d5464]">
-                  {product.subtitle || product.description}
-                </p>
               </div>
 
               <div className="flex">
