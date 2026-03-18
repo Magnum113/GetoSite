@@ -23,17 +23,7 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
             className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.04]"
             style={{ backgroundImage: `url(${product.gallery[0]})` }}
           />
-          <div className="absolute inset-x-0 top-0 flex items-start justify-between p-2.5 sm:p-4">
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              <span className="rounded-full bg-[#17111e] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-white sm:px-3 sm:text-[10px] sm:tracking-[0.24em]">
-                {product.kind}
-              </span>
-              {product.badge ? (
-                <span className="rounded-full bg-[#29d6cf] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#17111e] sm:px-3 sm:text-[10px] sm:tracking-[0.24em]">
-                  {product.badge}
-                </span>
-              ) : null}
-            </div>
+          <div className="absolute inset-x-0 top-0 flex items-start justify-end p-2.5 sm:p-4">
             {product.discountPercent ? (
               <span className="rounded-full border border-[#ffb49f]/45 bg-gradient-to-r from-[#ff7a5d] to-[#e7402a] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(231,64,42,0.3)] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em]">
                 -{product.discountPercent}%
@@ -107,18 +97,20 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
                     image: singleVariant.primaryImage,
                   })
                 }
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#17111e] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-[#e7402a] sm:gap-2 sm:px-4 sm:py-3 sm:text-sm"
+                aria-label="Добавить в корзину"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#17111e] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-[#e7402a] max-[430px]:size-11 max-[430px]:justify-center max-[430px]:gap-0 max-[430px]:px-0 max-[430px]:py-0 sm:gap-2 sm:px-4 sm:py-3 sm:text-sm"
               >
                 <ShoppingBag className="size-3.5 sm:size-4" />
-                <span className="hidden sm:inline">В корзину</span>
-                <span className="sm:hidden">Взять</span>
+                <span className="max-[430px]:hidden">В корзину</span>
               </button>
             ) : (
               <Link
                 href={`/products/${product.slug}`}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#e7402a] px-3.5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#ff684f] sm:px-5 sm:text-sm"
+                aria-label="Выбрать товар"
+                className="inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#e7402a] px-3.5 py-2.5 text-xs font-semibold text-white transition hover:bg-[#ff684f] max-[430px]:size-11 max-[430px]:px-0 max-[430px]:py-0 sm:px-5 sm:text-sm"
               >
-                Выбрать
+                <ShoppingBag className="hidden size-4 max-[430px]:block" />
+                <span className="max-[430px]:hidden">Выбрать</span>
               </Link>
             )}
           </div>
