@@ -140,7 +140,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
           </div>
 
           <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-4 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5">
-            <div className="absolute left-6 right-6 top-8 z-20 h-1 overflow-hidden rounded-full bg-white/10">
+            <div className="absolute left-6 right-6 top-6 z-20 h-1 overflow-hidden rounded-full bg-white/10 sm:top-8">
               <div
                 key={activeProduct.id}
                 className="hero-progress-bar h-full rounded-full bg-gradient-to-r from-[#f4b04d] via-[#e7402a] to-[#29d6cf]"
@@ -148,7 +148,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
             </div>
 
             <div className="relative min-h-[760px] overflow-hidden rounded-[2.2rem]">
-              <div className="absolute -left-10 top-24 h-40 w-40 rounded-full bg-[#e7402a]/18 blur-3xl" />
+              <div className="absolute -left-10 top-20 h-40 w-40 rounded-full bg-[#e7402a]/18 blur-3xl sm:top-24" />
               <div className="absolute right-0 top-10 h-48 w-48 rounded-full bg-[#29d6cf]/20 blur-3xl" />
               <div className="absolute bottom-0 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-[#f4b04d]/16 blur-3xl" />
 
@@ -165,7 +165,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     }`}
                     aria-hidden={!isActive}
                   >
-                    <div className="absolute inset-x-6 top-24 bottom-[186px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm">
+                    <div className="absolute inset-x-6 top-16 bottom-[186px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm sm:top-24">
                       <div className="relative h-full w-full">
                         <Image
                           src={product.gallery[0]}
