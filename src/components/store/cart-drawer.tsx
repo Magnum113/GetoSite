@@ -138,8 +138,7 @@ export function CartDrawer() {
                 <span>{formatCurrency(subtotal)}</span>
               </div>
               <p className="mb-5 text-xs leading-5 text-white/45">
-                Доставка и оплата подключаются отдельно. Сейчас сайт оформляет заказ и резервирует
-                состав корзины.
+                После оформления мы свяжемся с тобой и подтвердим детали заказа.
               </p>
               <Link
                 href="/checkout"

@@ -1,7 +1,7 @@
 "use client";
 
 import { startTransition, useDeferredValue, useState } from "react";
-import { Filter, Search, SlidersHorizontal, Sparkles } from "lucide-react";
+import { ChevronDown, Filter, Search, SlidersHorizontal } from "lucide-react";
 import type { CatalogMeta, CatalogProduct } from "@/types/store";
 import { StoreProductCard } from "@/components/store/store-product-card";
 
@@ -81,11 +81,7 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
           <aside className="surface-panel rounded-[2rem] p-5 sm:p-6 lg:sticky lg:top-28 lg:h-fit">
             <div className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Store control</p>
-                <h2 className="mt-3 font-display text-3xl text-[#17111e]">Каталог на главной</h2>
-                <p className="mt-3 text-sm leading-6 text-[#5d5464]">
-                  Витрина показывает все товары из выгрузки Ozon и фильтруется в реальном времени.
-                </p>
+                <h2 className="font-display text-3xl text-[#17111e]">Каталог</h2>
               </div>
 
               <label className="block">
@@ -135,50 +131,62 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
                 </div>
 
                 <div className="grid gap-3">
-                  <select
-                    value={badge}
-                    onChange={(event) => setBadge(event.target.value)}
-                    className="rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 text-sm outline-none focus:border-[#29d6cf]"
-                  >
-                    {badges.map((option) => (
-                      <option key={option} value={option}>
-                        {option === "Все" ? "Все техники" : option}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={color}
-                    onChange={(event) => setColor(event.target.value)}
-                    className="rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 text-sm outline-none focus:border-[#29d6cf]"
-                  >
-                    {colors.map((option) => (
-                      <option key={option} value={option}>
-                        {option === "Все" ? "Все цвета" : option}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={size}
-                    onChange={(event) => setSize(event.target.value)}
-                    className="rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 text-sm outline-none focus:border-[#29d6cf]"
-                  >
-                    {sizes.map((option) => (
-                      <option key={option} value={option}>
-                        {option === "Все" ? "Все размеры" : option}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={sort}
-                    onChange={(event) => setSort(event.target.value as SortKey)}
-                    className="rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 text-sm outline-none focus:border-[#29d6cf]"
-                  >
-                    <option value="featured">Сначала хиты</option>
-                    <option value="newest">Сначала новинки</option>
-                    <option value="price-asc">Цена: по возрастанию</option>
-                    <option value="price-desc">Цена: по убыванию</option>
-                    <option value="name">По названию</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={badge}
+                      onChange={(event) => setBadge(event.target.value)}
+                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                    >
+                      {badges.map((option) => (
+                        <option key={option} value={option}>
+                          {option === "Все" ? "Все техники" : option}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={color}
+                      onChange={(event) => setColor(event.target.value)}
+                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                    >
+                      {colors.map((option) => (
+                        <option key={option} value={option}>
+                          {option === "Все" ? "Все цвета" : option}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={size}
+                      onChange={(event) => setSize(event.target.value)}
+                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                    >
+                      {sizes.map((option) => (
+                        <option key={option} value={option}>
+                          {option === "Все" ? "Все размеры" : option}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={sort}
+                      onChange={(event) => setSort(event.target.value as SortKey)}
+                      className="w-full appearance-none rounded-[1.25rem] border border-[#17111e]/10 bg-white/80 px-4 py-3 pr-12 text-sm outline-none focus:border-[#29d6cf]"
+                    >
+                      <option value="featured">Сначала хиты</option>
+                      <option value="newest">Сначала новинки</option>
+                      <option value="price-asc">Цена: по возрастанию</option>
+                      <option value="price-desc">Цена: по убыванию</option>
+                      <option value="name">По названию</option>
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-[#17111e]/70" />
+                  </div>
                 </div>
               </div>
 
@@ -212,21 +220,10 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
 
           <div className="space-y-6">
             <div className="surface-panel rounded-[2rem] p-5 sm:p-6">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">GETO catalog</p>
-                  <h2 className="mt-3 font-display text-4xl text-[#17111e]">
-                    {filteredProducts.length} из {meta.productCount} дизайнов
-                  </h2>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-[#5d5464]">
-                    Каталог собран из {meta.skuCount} SKU. Ниже сразу доступны поиск, фильтры по
-                    технике, цвету, размеру и сортировка по цене или новизне.
-                  </p>
-                </div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#17111e] px-4 py-2 text-xs uppercase tracking-[0.26em] text-white">
-                  <Sparkles className="size-3.5 text-[#f4b04d]" />
-                  Главное уже готово к checkout
-                </div>
+              <div>
+                <h2 className="font-display text-4xl text-[#17111e]">
+                  {meta.productCount} дизайнов
+                </h2>
               </div>
             </div>
 
@@ -234,8 +231,7 @@ export function StorefrontShell({ products, meta }: StorefrontShellProps) {
               <div className="surface-panel rounded-[2rem] px-6 py-16 text-center">
                 <h3 className="font-display text-3xl text-[#17111e]">Ничего не найдено</h3>
                 <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-[#5d5464]">
-                  Попробуй убрать часть фильтров или изменить запрос. Каталог сейчас собран из
-                  реальных данных Ozon, поэтому совпадения ищутся только по живым карточкам.
+                  Попробуй убрать часть фильтров или изменить запрос.
                 </p>
               </div>
             ) : (

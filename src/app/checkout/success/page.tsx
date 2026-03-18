@@ -25,13 +25,12 @@ export default async function CheckoutSuccessPage({ searchParams }: SuccessPageP
                 <CheckCircle2 className="size-10 text-[#29d6cf]" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Order saved</p>
+                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Заказ оформлен</p>
                 <h1 className="mt-3 font-display text-4xl text-[#17111e] sm:text-5xl">
                   Заказ принят в работу
                 </h1>
                 <p className="mt-4 text-sm leading-7 text-[#5d5464]">
-                  Мы сохранили состав заказа и контактные данные. Следующий шаг для проекта:
-                  подключить оплату и канал уведомлений.
+                  Мы получили заказ и скоро свяжемся с тобой для подтверждения деталей.
                 </p>
               </div>
               <div className="rounded-[1.8rem] border border-[#17111e]/10 bg-white/75 px-5 py-4">

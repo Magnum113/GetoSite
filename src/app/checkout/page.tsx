@@ -69,13 +69,12 @@ export default function CheckoutPage() {
           {items.length === 0 ? (
             <section className="surface-panel rounded-[2.4rem] px-6 py-16 text-center sm:px-10">
               <div className="mx-auto max-w-xl space-y-5">
-                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Checkout</p>
+                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Корзина</p>
                 <h1 className="font-display text-4xl text-[#17111e] sm:text-5xl">
                   Корзина пустая
                 </h1>
                 <p className="text-sm leading-7 text-[#5d5464]">
-                  Сначала добавь в корзину футболку или худи. После этого страница оформления уже
-                  сохранит заказ без подключения оплаты.
+                  Сначала добавь в корзину футболку или худи, а потом переходи к оформлению.
                 </p>
                 <Link
                   href="/#catalog"
@@ -91,13 +90,13 @@ export default function CheckoutPage() {
               <section className="surface-panel rounded-[2.4rem] p-6 sm:p-8">
                 <div className="space-y-6">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Checkout</p>
+                    <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Оформление</p>
                     <h1 className="mt-3 font-display text-4xl text-[#17111e] sm:text-5xl">
                       Оформление заказа
                     </h1>
                     <p className="mt-3 max-w-2xl text-sm leading-7 text-[#5d5464]">
-                      Оплата подключится позже. Сейчас форма сохраняет состав корзины и данные
-                      клиента, чтобы заказ не терялся.
+                      Оставь контакты и адрес, а мы подтвердим заказ и свяжемся с тобой по
+                      деталям.
                     </p>
                   </div>
 
@@ -181,7 +180,7 @@ export default function CheckoutPage() {
                       {isSubmitting ? (
                         <>
                           <LoaderCircle className="size-4 animate-spin" />
-                          Сохраняем заказ
+                          Отправляем заказ
                         </>
                       ) : (
                         <>
@@ -195,7 +194,7 @@ export default function CheckoutPage() {
               </section>
 
               <aside className="surface-panel rounded-[2.4rem] p-6">
-                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Order summary</p>
+                <p className="text-xs uppercase tracking-[0.32em] text-[#706778]">Состав заказа</p>
                 <div className="mt-5 space-y-4">
                   {items.map((item) => (
                     <article
@@ -231,7 +230,7 @@ export default function CheckoutPage() {
                     <span className="font-display text-3xl">{formatCurrency(subtotal)}</span>
                   </div>
                   <p className="mt-4 text-xs leading-5 text-white/45">
-                    Стоимость доставки пока не рассчитывается автоматически и уточняется отдельно.
+                    Стоимость доставки уточним при подтверждении заказа.
                   </p>
                 </div>
               </aside>

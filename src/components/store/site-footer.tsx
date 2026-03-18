@@ -9,8 +9,7 @@ export function SiteFooter() {
         <div className="max-w-xl space-y-3">
           <BrandLogo className="h-auto w-[130px] sm:w-[150px]" />
           <p className="text-sm leading-6 text-[#5f5666]">
-            {siteConfig.description} Каталог на сайте собирается вручную из Ozon Seller API, а
-            checkout уже готов к подключению оплаты и уведомлений.
+            {siteConfig.description}
           </p>
         </div>
 

@@ -327,10 +327,9 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
               </div>
             </article>
             <article className="surface-panel rounded-[2rem] p-5">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#706778]">Checkout status</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#706778]">Заказ</p>
               <p className="mt-4 text-sm leading-6 text-[#342c3d]">
-                Заказ уже оформляется на сайте. Платёжка и автоматические уведомления подключаются
-                следующим шагом.
+                После оформления мы свяжемся с тобой и подтвердим детали заказа.
               </p>
             </article>
           </aside>

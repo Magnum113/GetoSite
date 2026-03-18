@@ -15,7 +15,7 @@ export default function NotFound() {
                 Товар не найден
               </h1>
               <p className="text-sm leading-7 text-[#5d5464]">
-                Возможно, URL устарел или товара больше нет в текущей выгрузке каталога.
+                Возможно, ссылка устарела или товар уже недоступен.
               </p>
               <Link
                 href="/#catalog"
