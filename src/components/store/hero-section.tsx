@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ChevronRight } from "lucide-react";
-import { useEffect, useEffectEvent, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { PriceText } from "@/components/store/price-text";
 import type { CatalogProduct } from "@/types/store";
 
@@ -26,10 +26,20 @@ const HERO_TICKER_ITEMS = [
 export function HeroSection({ featuredProducts }: HeroSectionProps) {
   const products = featuredProducts.slice(0, 6);
   const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const rotateProducts = useEffectEvent(() => {
     setActiveIndex((currentIndex) => (currentIndex + 1) % products.length);
   });
+
+  const showNextProduct = () => {
+    setActiveIndex((currentIndex) => (currentIndex + 1) % products.length);
+  };
+
+  const showPreviousProduct = () => {
+    setActiveIndex((currentIndex) => (currentIndex - 1 + products.length) % products.length);
+  };
 
   useEffect(() => {
     if (products.length < 2) {
@@ -139,15 +149,44 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-4 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5">
-            <div className="absolute left-6 right-6 top-6 z-20 h-1 overflow-hidden rounded-full bg-white/10 sm:top-8">
+          <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-3.5 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5">
+            <div className="absolute left-5 right-5 top-5 z-20 h-1 overflow-hidden rounded-full bg-white/10 sm:left-6 sm:right-6 sm:top-8">
               <div
                 key={activeProduct.id}
                 className="hero-progress-bar h-full rounded-full bg-gradient-to-r from-[#f4b04d] via-[#e7402a] to-[#29d6cf]"
               />
             </div>
 
-            <div className="relative min-h-[760px] overflow-hidden rounded-[2.2rem]">
+            <div
+              className="relative min-h-[650px] overflow-hidden rounded-[2.2rem] sm:min-h-[760px]"
+              onTouchStart={(event) => {
+                const touch = event.touches[0];
+                touchStartX.current = touch.clientX;
+                touchStartY.current = touch.clientY;
+              }}
+              onTouchEnd={(event) => {
+                if (touchStartX.current === null || touchStartY.current === null) {
+                  return;
+                }
+
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - touchStartX.current;
+                const deltaY = touch.clientY - touchStartY.current;
+
+                touchStartX.current = null;
+                touchStartY.current = null;
+
+                if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY)) {
+                  return;
+                }
+
+                if (deltaX < 0) {
+                  showNextProduct();
+                } else {
+                  showPreviousProduct();
+                }
+              }}
+            >
               <div className="absolute -left-10 top-20 h-40 w-40 rounded-full bg-[#e7402a]/18 blur-3xl sm:top-24" />
               <div className="absolute right-0 top-10 h-48 w-48 rounded-full bg-[#29d6cf]/20 blur-3xl" />
               <div className="absolute bottom-0 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-[#f4b04d]/16 blur-3xl" />
@@ -165,7 +204,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     }`}
                     aria-hidden={!isActive}
                   >
-                    <div className="absolute inset-x-6 top-16 bottom-[186px] overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm sm:top-24">
+                    <div className="absolute inset-x-4 top-12 bottom-[156px] overflow-hidden rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] backdrop-blur-sm sm:inset-x-6 sm:top-24 sm:bottom-[186px] sm:rounded-[2rem]">
                       <div className="relative h-full w-full">
                         <Image
                           src={product.gallery[0]}
@@ -190,27 +229,27 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                       </div>
                     </div>
 
-                    <div className="absolute inset-x-5 bottom-5">
+                    <div className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5">
                       <div
                         key={`${product.id}-meta`}
-                        className="hero-card-entrance rounded-[2rem] border border-white/12 bg-[linear-gradient(135deg,rgba(13,10,18,0.94),rgba(29,20,39,0.82))] p-5 shadow-[0_24px_60px_rgba(5,4,10,0.28)] backdrop-blur-xl sm:p-6"
+                        className="hero-card-entrance rounded-[1.75rem] border border-white/12 bg-[linear-gradient(135deg,rgba(13,10,18,0.94),rgba(29,20,39,0.82))] p-4 shadow-[0_24px_60px_rgba(5,4,10,0.28)] backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
                       >
-                        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                           <div className="max-w-md">
-                            <h2 className="font-display text-[2.25rem] leading-[0.98] text-white sm:text-[2.7rem]">
+                            <h2 className="font-display text-[1.7rem] leading-[0.94] text-white sm:text-[2.7rem] sm:leading-[0.98]">
                               {product.title}
                             </h2>
                           </div>
-                          <div className="flex flex-col gap-4 sm:items-end">
+                          <div className="flex flex-col gap-3 sm:items-end sm:gap-4">
                             <div className="sm:text-right">
                               {product.oldPriceFrom ? (
                                 <PriceText value={product.oldPriceFrom} className="text-sm text-white/38 line-through" />
                               ) : null}
-                              <PriceText value={product.priceFrom} className="text-5xl text-[#f4b04d]" />
+                              <PriceText value={product.priceFrom} className="text-[3rem] text-[#f4b04d] sm:text-5xl" />
                             </div>
                             <Link
                               href={`/products/${product.slug}`}
-                              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#17111e] transition hover:bg-[#f4b04d]"
+                              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#17111e] transition hover:bg-[#f4b04d] sm:px-5 sm:py-3 sm:text-xs"
                             >
                               Открыть
                               <ChevronRight className="size-4" />
