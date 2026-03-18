@@ -2,6 +2,14 @@ import rawCatalog from "@/data/catalog.json";
 import type { CatalogData, CatalogProduct } from "@/types/store";
 
 export const catalog = rawCatalog as CatalogData;
+const priceAmountFormatter = new Intl.NumberFormat("ru-RU", {
+  maximumFractionDigits: 0,
+});
+const priceCurrencyFormatter = new Intl.NumberFormat("ru-RU", {
+  style: "currency",
+  currency: "RUB",
+  maximumFractionDigits: 0,
+});
 
 export function getAllProducts() {
   return catalog.products;
@@ -42,11 +50,11 @@ export function getRelatedProducts(product: CatalogProduct, count = 4) {
 }
 
 export function formatCurrency(value: number) {
-  return new Intl.NumberFormat("ru-RU", {
-    style: "currency",
-    currency: "RUB",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return priceCurrencyFormatter.format(value);
+}
+
+export function formatPriceAmount(value: number) {
+  return priceAmountFormatter.format(value);
 }
 
 export function formatProductCount(value: number) {

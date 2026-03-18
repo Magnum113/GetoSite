@@ -28,6 +28,7 @@
   --color-accent-plum: var(--accent-plum);
   --font-sans: var(--font-body-face);
   --font-display: var(--font-display-face);
+  --font-price: var(--font-price-face);
 }
 
 html {

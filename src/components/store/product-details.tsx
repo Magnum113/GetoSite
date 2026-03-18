@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
-import { formatCurrency } from "@/lib/catalog";
 import { useCart } from "@/components/providers/cart-provider";
+import { PriceText } from "@/components/store/price-text";
 import type { CatalogProduct, CatalogVariant } from "@/types/store";
 
 function getVariantForSelection(
@@ -137,14 +137,10 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
 
               <div className="rounded-[1.8rem] border border-[#17111e]/10 bg-white/75 p-5">
                 {selectedVariant.oldPrice ? (
-                  <p className="text-sm text-[#8b8190] line-through">
-                    {formatCurrency(selectedVariant.oldPrice)}
-                  </p>
+                  <PriceText value={selectedVariant.oldPrice} className="text-sm text-[#8b8190] line-through" />
                 ) : null}
                 <div className="mt-2 flex flex-wrap items-end gap-4">
-                  <p className="font-display text-5xl text-[#17111e]">
-                    {formatCurrency(selectedVariant.price)}
-                  </p>
+                  <PriceText value={selectedVariant.price} className="text-5xl text-[#17111e]" />
                   <div className="space-y-1 pb-1">
                     <p className="text-xs uppercase tracking-[0.24em] text-[#706778]">
                       В наличии

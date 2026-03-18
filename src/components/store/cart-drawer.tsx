@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
-import { formatCurrency } from "@/lib/catalog";
+import { PriceText } from "@/components/store/price-text";
 import { useCart } from "@/components/providers/cart-provider";
 
 export function CartDrawer() {
@@ -122,9 +122,7 @@ export function CartDrawer() {
                             <Plus className="size-3" />
                           </button>
                         </div>
-                        <p className="text-sm font-semibold text-[#f4b04d]">
-                          {formatCurrency(item.price * item.quantity)}
-                        </p>
+                        <PriceText value={item.price * item.quantity} className="text-sm text-[#f4b04d]" />
                       </div>
                     </div>
                   </div>
@@ -135,7 +133,7 @@ export function CartDrawer() {
             <div className="border-t border-white/10 px-6 py-5">
               <div className="mb-4 flex items-center justify-between text-sm text-white/70">
                 <span>Товары</span>
-                <span>{formatCurrency(subtotal)}</span>
+                <PriceText value={subtotal} className="text-sm text-white/70" />
               </div>
               <p className="mb-5 text-xs leading-5 text-white/45">
                 После оформления мы свяжемся с тобой и подтвердим детали заказа.

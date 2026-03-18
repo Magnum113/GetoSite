@@ -4,10 +4,10 @@ import { startTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LoaderCircle, ShoppingBag } from "lucide-react";
+import { PriceText } from "@/components/store/price-text";
 import { SiteFooter } from "@/components/store/site-footer";
 import { SiteHeader } from "@/components/store/site-header";
 import { useCart } from "@/components/providers/cart-provider";
-import { formatCurrency } from "@/lib/catalog";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -215,9 +215,7 @@ export default function CheckoutPage() {
                             {item.size ? ` • ${item.size}` : ""}
                             {` • ${item.quantity} шт.`}
                           </p>
-                          <p className="mt-3 text-sm font-semibold text-[#17111e]">
-                            {formatCurrency(item.price * item.quantity)}
-                          </p>
+                          <PriceText value={item.price * item.quantity} className="mt-3 text-sm text-[#17111e]" />
                         </div>
                       </div>
                     </article>
@@ -227,7 +225,7 @@ export default function CheckoutPage() {
                 <div className="mt-6 rounded-[1.8rem] border border-[#17111e]/10 bg-[#17111e] p-5 text-white">
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-white/65">Итого</span>
-                    <span className="font-display text-3xl">{formatCurrency(subtotal)}</span>
+                    <PriceText value={subtotal} className="text-3xl text-white" />
                   </div>
                   <p className="mt-4 text-xs leading-5 text-white/45">
                     Стоимость доставки уточним при подтверждении заказа.

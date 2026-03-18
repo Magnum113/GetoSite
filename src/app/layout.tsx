@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, Russo_One } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, Russo_One } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/providers/cart-provider";
 import { CartDrawer } from "@/components/store/cart-drawer";
@@ -17,6 +17,12 @@ const displayFont = Russo_One({
   weight: "400",
 });
 
+const priceFont = IBM_Plex_Sans_Condensed({
+  variable: "--font-price-face",
+  subsets: ["latin", "cyrillic-ext"],
+  weight: ["600", "700"],
+});
+
 export const metadata: Metadata = {
   title: {
     default: `${siteConfig.name} | Anime Streetwear`,
@@ -32,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${bodyFont.variable} ${displayFont.variable} antialiased`}>
+      <body className={`${bodyFont.variable} ${displayFont.variable} ${priceFont.variable} antialiased`}>
         <CartProvider>
           {children}
           <CartDrawer />

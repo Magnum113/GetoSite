@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownRight, ChevronRight, ShoppingBag } from "lucide-react";
+import { ArrowDownRight, ChevronRight } from "lucide-react";
 import { useEffect, useEffectEvent, useState } from "react";
-import { formatCurrency } from "@/lib/catalog";
+import { PriceText } from "@/components/store/price-text";
 import type { CatalogProduct } from "@/types/store";
 
 type HeroSectionProps = {
@@ -12,6 +12,16 @@ type HeroSectionProps = {
 };
 
 const AUTO_ROTATE_MS = 4400;
+const HERO_TICKER_ITEMS = [
+  "Наруто",
+  "Итачи Учиха",
+  "Сатору Годжо",
+  "Магическая Битва",
+  "Акатсуки",
+  "GTA",
+  "Мадара Учиха",
+  "Gravity Defied",
+];
 
 export function HeroSection({ featuredProducts }: HeroSectionProps) {
   const products = featuredProducts.slice(0, 6);
@@ -40,7 +50,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
   }
 
   const activeProduct = products[activeIndex % products.length];
-  const tickerItems = [...products, ...products].map((product) => product.title);
+  const tickerItems = [...HERO_TICKER_ITEMS, ...HERO_TICKER_ITEMS];
 
   return (
     <section className="px-4 pb-8 pt-8 sm:px-6 lg:px-10">
@@ -64,7 +74,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     японский вайб и яркий силуэт
                   </p>
                   <h1 className="display-shadow max-w-[8.5ch] font-display text-[3.8rem] uppercase leading-[0.9] text-[#17111e] sm:text-[4.8rem] lg:text-[5.2rem] xl:text-[5.5rem]">
-                    Аниме-мерч с характером.
+                    Шмот с собственной аркой.
                   </h1>
                 </div>
 
@@ -75,13 +85,6 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                   >
                     Смотреть каталог
                     <ArrowDownRight className="size-4" />
-                  </Link>
-                  <Link
-                    href={`/products/${activeProduct.slug}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#17111e]/10 bg-white/75 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#17111e] transition hover:border-[#29d6cf] hover:text-[#29d6cf]"
-                  >
-                    <ShoppingBag className="size-4" />
-                    Открыть товар
                   </Link>
                 </div>
               </div>
@@ -153,13 +156,9 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                           <div className="flex flex-col gap-4 sm:items-end">
                             <div className="sm:text-right">
                               {product.oldPriceFrom ? (
-                                <p className="text-sm text-white/38 line-through">
-                                  {formatCurrency(product.oldPriceFrom)}
-                                </p>
+                                <PriceText value={product.oldPriceFrom} className="text-sm text-white/38 line-through" />
                               ) : null}
-                              <p className="font-display text-5xl leading-none text-[#f4b04d]">
-                                {formatCurrency(product.priceFrom)}
-                              </p>
+                              <PriceText value={product.priceFrom} className="text-5xl text-[#f4b04d]" />
                             </div>
                             <Link
                               href={`/products/${product.slug}`}
@@ -177,7 +176,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               })}
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-5 grid grid-cols-2 gap-2.5 sm:gap-3 xl:grid-cols-3">
               {products.map((product, index) => {
                 const isActive = index === activeIndex;
 
@@ -186,18 +185,18 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                     key={product.id}
                     type="button"
                     onClick={() => setActiveIndex(index)}
-                    className={`group text-left transition duration-500 ${
+                    className={`group min-w-0 text-left transition duration-500 ${
                       isActive ? "translate-y-[-2px]" : ""
                     }`}
                   >
                     <div
-                      className={`relative overflow-hidden rounded-[1.7rem] border backdrop-blur-sm transition duration-500 ${
+                      className={`relative overflow-hidden rounded-[1.35rem] border backdrop-blur-sm transition duration-500 sm:rounded-[1.7rem] ${
                         isActive
                           ? "border-white/18 bg-white/10 shadow-[0_18px_44px_rgba(0,0,0,0.22)]"
                           : "border-white/8 bg-white/[0.04] hover:border-white/16 hover:bg-white/[0.07]"
                       }`}
                     >
-                      <div className="relative aspect-[1.04]">
+                      <div className="relative aspect-[0.94] sm:aspect-[1.04]">
                         <Image
                           src={product.gallery[0]}
                           alt={product.title}
@@ -208,12 +207,10 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
                           }`}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#120d18] via-[#120d18]/28 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
-                          <p className="font-display text-3xl text-[#f4b04d]">
-                            {formatCurrency(product.priceFrom)}
-                          </p>
+                        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2.5 sm:gap-3 sm:p-4">
+                          <PriceText value={product.priceFrom} className="text-2xl text-[#f4b04d] sm:text-3xl" />
                           <ChevronRight
-                            className={`size-4 transition ${
+                            className={`size-3.5 transition sm:size-4 ${
                               isActive ? "translate-x-0 text-white" : "translate-x-0 text-white/48"
                             }`}
                           />

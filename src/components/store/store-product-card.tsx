@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowUpRight, ShoppingBag } from "lucide-react";
-import { formatCurrency } from "@/lib/catalog";
+import { PriceText } from "@/components/store/price-text";
 import { useCart } from "@/components/providers/cart-provider";
 import type { CatalogProduct } from "@/types/store";
 
@@ -93,13 +93,9 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
           <div className="mt-5 flex items-end justify-between gap-4">
             <div>
               {product.oldPriceFrom ? (
-                <p className="text-sm text-[#807688] line-through">
-                  {formatCurrency(product.oldPriceFrom)}
-                </p>
+                <PriceText value={product.oldPriceFrom} className="text-sm text-[#807688] line-through" />
               ) : null}
-              <p className="font-display text-3xl text-[#17111e]">
-                {formatCurrency(product.priceFrom)}
-              </p>
+              <PriceText value={product.priceFrom} className="text-3xl text-[#17111e]" />
             </div>
 
             {singleVariant && product.inStock ? (
