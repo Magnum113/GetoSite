@@ -46,24 +46,24 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
     <section className="px-4 pb-8 pt-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.03fr)_minmax(440px,0.97fr)]">
-          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-8 sm:px-10 sm:py-10 lg:min-h-[760px] lg:px-12 lg:py-12">
+          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-7 sm:px-10 sm:py-9 lg:min-h-[620px] lg:px-12 lg:py-10">
             <div className="pulse-aura absolute -left-12 top-10 h-56 w-56 rounded-full bg-[#e7402a]/18 blur-3xl" />
             <div className="pulse-aura absolute bottom-10 right-0 h-60 w-60 rounded-full bg-[#29d6cf]/16 blur-3xl" />
             <div className="absolute inset-y-8 right-8 hidden w-px bg-gradient-to-b from-transparent via-[#17111e]/10 to-transparent lg:block" />
 
-            <div className="relative flex h-full flex-col justify-center gap-10">
-              <div className="space-y-8">
+            <div className="relative flex h-full flex-col justify-start gap-7 lg:pt-6">
+              <div className="max-w-[40rem] space-y-6">
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="rounded-full bg-[#17111e] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white">
-                    принты, вышивка, плотный хлопок
+                  <span className="rounded-full bg-[#17111e] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
+                    принты и вышивка
                   </span>
                 </div>
 
-                <div className="space-y-5">
+                <div className="space-y-4">
                   <p className="text-xs uppercase tracking-[0.36em] text-[#6e6476]">
                     японский вайб и яркий силуэт
                   </p>
-                  <h1 className="display-shadow max-w-4xl font-display text-5xl uppercase leading-[0.88] text-[#17111e] sm:text-6xl lg:text-7xl xl:text-[5.7rem]">
+                  <h1 className="display-shadow max-w-[8.5ch] font-display text-[3.8rem] uppercase leading-[0.9] text-[#17111e] sm:text-[4.8rem] lg:text-[5.2rem] xl:text-[5.5rem]">
                     Аниме-мерч с характером.
                   </h1>
                 </div>
