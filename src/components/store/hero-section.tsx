@@ -60,13 +60,14 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
   }
 
   const activeProduct = products[activeIndex % products.length];
+  const desktopPreviewProducts = products.slice(0, 3);
   const tickerItems = [...HERO_TICKER_ITEMS, ...HERO_TICKER_ITEMS];
 
   return (
     <section className="px-4 pb-8 pt-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.03fr)_minmax(440px,0.97fr)]">
-          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-7 sm:px-10 sm:py-9 lg:min-h-[760px] lg:px-12 lg:py-10">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.03fr)_minmax(440px,0.97fr)] lg:items-stretch">
+          <div className="surface-panel hero-glow relative overflow-hidden rounded-[2.7rem] px-6 py-7 sm:px-10 sm:py-9 lg:h-full lg:min-h-[804px] lg:px-12 lg:py-10">
             <div className="pulse-aura absolute -left-12 top-10 h-56 w-56 rounded-full bg-[#e7402a]/18 blur-3xl" />
             <div className="pulse-aura absolute bottom-10 right-0 h-60 w-60 rounded-full bg-[#29d6cf]/16 blur-3xl" />
             <div className="absolute inset-y-8 right-8 hidden w-px bg-gradient-to-b from-transparent via-[#17111e]/10 to-transparent lg:block" />
@@ -102,8 +103,8 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
               </div>
 
               <div className="hidden lg:grid lg:grid-cols-3 lg:gap-3">
-                {products.map((product, index) => {
-                  const isActive = index === activeIndex;
+                {desktopPreviewProducts.map((product, index) => {
+                  const isActive = product.id === activeProduct.id;
 
                   return (
                     <button
@@ -149,7 +150,7 @@ export function HeroSection({ featuredProducts }: HeroSectionProps) {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-3.5 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5">
+          <div className="relative overflow-hidden rounded-[2.7rem] border border-[#17111e]/10 bg-[#17111e] p-3.5 text-white shadow-[0_30px_90px_rgba(20,14,26,0.18)] sm:p-5 lg:h-full lg:min-h-[804px]">
             <div className="absolute left-5 right-5 top-5 z-20 h-1 overflow-hidden rounded-full bg-white/10 sm:left-6 sm:right-6 sm:top-8">
               <div
                 key={activeProduct.id}

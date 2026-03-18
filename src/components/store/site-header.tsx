@@ -37,15 +37,15 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={openCart}
-          className="inline-flex items-center gap-2.5 rounded-full bg-[#17111e] px-3.5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#e7402a]"
+          className="inline-flex min-w-[132px] items-center justify-center gap-2 rounded-full bg-[#17111e] px-3.5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#e7402a] sm:min-w-0 sm:px-4"
         >
-          <span className="relative inline-flex">
-            <ShoppingBag className="size-4" />
-            <span className="absolute -right-2 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f4b04d] px-1 text-[10px] font-bold text-[#17111e]">
-              {totalItems}
-            </span>
+          <ShoppingBag className="size-4 shrink-0" />
+          <span className="text-[13px] uppercase tracking-[0.14em] sm:text-sm sm:tracking-[0.04em]">
+            Корзина
           </span>
-          <span className="hidden sm:inline">Корзина</span>
+          <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-[#f4b04d] px-1.5 text-[10px] font-bold text-[#17111e]">
+            {totalItems}
+          </span>
         </button>
       </div>
     </header>
