@@ -285,19 +285,6 @@ export function ProductDetails({ product }: { product: CatalogProduct }) {
 
           <aside className="space-y-4">
             <article className="surface-panel rounded-[2rem] p-5">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#706778]">Фичи</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {product.features.map((feature) => (
-                  <span
-                    key={feature}
-                    className="rounded-full border border-[#17111e]/10 bg-white/75 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#17111e]"
-                  >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-            </article>
-            <article className="surface-panel rounded-[2rem] p-5">
               <p className="text-xs uppercase tracking-[0.3em] text-[#706778]">Теги</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {product.tags.slice(0, 8).map((tag) => (

@@ -23,13 +23,6 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
             className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.04]"
             style={{ backgroundImage: `url(${product.gallery[0]})` }}
           />
-          <div className="absolute inset-x-0 top-0 flex items-start justify-end p-2.5 sm:p-4">
-            {product.discountPercent ? (
-              <span className="rounded-full border border-[#ffb49f]/45 bg-gradient-to-r from-[#ff7a5d] to-[#e7402a] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(231,64,42,0.3)] sm:px-3.5 sm:text-[11px] sm:tracking-[0.24em]">
-                -{product.discountPercent}%
-              </span>
-            ) : null}
-          </div>
           {!product.inStock ? (
             <div className="absolute inset-0 grid place-items-center bg-[#17111e]/55">
               <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-white">
@@ -55,14 +48,6 @@ export function StoreProductCard({ product }: { product: CatalogProduct }) {
           </div>
 
           <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
-            {product.colors.slice(0, 3).map((color) => (
-              <span
-                key={color}
-                className="rounded-full border border-[#17111e]/10 px-2.5 py-1 text-[10px] font-medium text-[#3a3144] sm:px-3 sm:text-xs"
-              >
-                {color}
-              </span>
-            ))}
             {product.sizes.slice(0, 4).map((size) => (
               <span
                 key={size}
